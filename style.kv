@@ -1,0 +1,356 @@
+<Button>
+    background_normal:''
+    background_color:(25/255,210/255,120/255,1)
+    color: (.1,.1,.1,1)
+    border_width:2
+    border_color: (1/255,1/255,1/255)
+
+<MyLayout>
+    # box:box
+    id:importTab
+    do_default_tab: False
+    size_hint: (1,1) 
+
+    TabbedPanelItem:
+        text: "Import"
+        BoxLayout:
+            orientation: 'vertical'
+            
+            FileChooserIconView:
+                id:file
+                size_hint: (1,.8)
+                on_submit: importTab.selected(file.selection)
+                path:'./'
+
+            Button:
+                text: "Update"
+                size_hint: (.3,.1)
+                font_size: 32
+                pos_hint: {'center_x': .5, 'center_y':.5}
+                on_press: root.upStat()
+
+    TabbedPanelItem:
+        text: "Input"
+        BoxLayout:
+            orientation: 'vertical'
+            size: root.width, root.height
+
+            GridLayout:
+                cols:2
+
+            # ROW
+                BoxLayout:
+                    padding: 20
+                    orientation: 'vertical'
+                    size: root.width/2, root.height
+
+                    Label:
+                        text: "GAIN"
+                        font_size: 40
+
+                    Label:
+                        id:resAmount
+                        text: "Ressource(Ar):"
+                        font_size: 30
+                    TextInput:
+                        id:inpResAmount
+                        multiline: False
+                        font_size:41
+
+                    Label:
+                        id:resReason
+                        text: "Reason: "
+                        font_size: 30
+                    
+                    TextInput:
+                        id:inpResReason
+                        multiline: False
+                        font_size:41
+
+
+                BoxLayout:
+                    padding: 20
+                    orientation: 'vertical'
+                    size: root.width/2, root.height
+
+                    Label:
+                        text: "SPENT"
+                        font_size: 40
+
+                    Label:
+                        id:sptAmount
+                        text: "Spent(Ar):"
+                        font_size: 30
+                    TextInput:
+                        id:inpSptAmount
+                        multiline: False
+                        font_size:41
+
+                    Label:
+                        id:sptReason
+                        text: "Reason: "
+                        font_size: 30
+                    
+                    TextInput:
+                        id:inpSptReason
+                        multiline: False                
+                        font_size:41
+
+                # BoxLayout:
+                #     column: 2
+                #     size: root.width, root.height/5
+                #     orientation: 'vertical'
+                Label:
+                    text: "Day: "
+                    font_size: 30
+                    id:resDay
+
+                BoxLayout:
+                    padding: 20
+
+                    TextInput:
+                        multiline: False
+                        id:inpDay
+                        size_hint: (.3,.2)
+                        pos_hint: {'center_x': .5, 'center_y':.5 }
+                        font_size:41
+
+            Button:
+                text: "Add"
+                font_size: 32
+                size_hint: (.3,.2)
+                pos_hint: {'center_x': .5, 'bottom':.2 }
+                on_press: root.addData()
+
+    
+
+    TabbedPanelItem:
+        text: "Stat"
+        Accordion:
+            orientation: 'vertical'
+            AccordionItem:
+                title: "More info about gains"
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y:1
+                    BoxLayout:
+                        size_hint_y: .8  
+                        Label:
+                            id:countG
+                            text: ""
+                            font_size: 32
+
+                    BoxLayout:
+                        padding: 10
+                        size_hint_y: .2
+                        Button:
+                            size_hint:(.2,.7)
+                            pos_hint: {'center_x': 0.5}
+                            text: "Gen. graph"
+                            font_size: 32
+                            background_color:(120/255,180/255,240/255,1)
+                            on_press: root.moreGraph()
+            
+                        Button:
+                            size_hint:(.3,.7)
+                            text: "Set freq"
+                            font_size: 32
+                            on_press: root.freq()
+
+                        Button:
+                            size_hint:(.3,.7)
+                            text: "Set count"
+                            font_size: 32
+                            on_press: root.count()
+
+                        Button:
+                            size_hint:(.3,.7)
+                            text: "Set sum"
+                            font_size: 32
+                            on_press: root.sumA()
+
+            AccordionItem:
+                title: "More info about spents"
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y:1
+                    # size: root.width, root.height
+                    BoxLayout:
+                        size_hint_y: .8 
+                        # padding: 10 
+                        Label:
+                            id:countS
+                            text: ""
+                            font_size: 35
+                    BoxLayout:
+                        size_hint_y:.2
+                        padding: 10
+                        Button:
+                            size_hint:(.3,.7)
+                            text: "Gen. graph"
+                            background_color:(120/255,180/255,240/255,1)
+                            font_size: 32
+                            on_press: root.moreGraph()
+
+                        Button:
+                            size_hint:(.3,.7)
+                            text: "Set freq"
+                            font_size: 32
+                            on_press: root.freq()
+
+                        Button:
+                            size_hint:(.3,.7)
+                            text: "Set count"
+                            font_size: 32
+                            on_press: root.count()
+
+                        Button:
+                            size_hint:(.3,.7)
+                            text: "Set sum"
+                            font_size: 32
+                            on_press: root.sumA()
+
+            AccordionItem:
+                title: "General stat"
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y:1
+                    GridLayout:
+                        cols:2
+                        rows:10
+
+                        Label:
+                            id:titleG
+                            text: "GAIN STAT"
+                            font_size: 30
+                        
+                        Label:
+                            id:titleS
+                            text: "SPENT STAT"
+                            font_size: 30
+
+                        Label:
+                            id:sumG
+                            text: ""
+                            font_size: 18
+                            
+                        Label:
+                            id:sumS
+                            text: ""
+                            font_size: 18
+                        
+                        Label:
+                            id:meanG
+                            text: ""
+                            font_size: 18
+
+                        Label:
+                            id:meanS        
+                            text: ""
+                            font_size: 18
+
+                        Label:
+                            id:stdG
+                            text: ""
+                            font_size: 18
+
+                        Label:
+                            id:stdS
+                            text: ""
+                            font_size: 18
+
+                        Label:
+                            id:minG
+                            text: ""
+                            font_size: 18
+                        Label:
+                            id: minS
+                            text: ""
+                            font_size: 18
+                    
+                        Label:
+                            id:maxG
+                            text: ""
+                            font_size: 18
+                        Label:
+                            id: maxS
+                            text: ""
+                            font_size: 18
+                    
+                    Button:
+                        text: "Gen graph"
+                        font_size:24
+                        size_hint: (.3,.1)
+                        background_color:(120/255,180/255,240/255,1)
+                        pos_hint: {'center_x': .5, }
+                        on_press: root.graph()
+
+    TabbedPanelItem:
+        text: "Graphs"
+        # BoxLayout:
+        id:box
+        size_hint_y:.8
+        pos_hint:{'top':1}
+
+        BoxLayout:
+            size_hint_y:.2
+
+            TextInput:
+                id:nameImg
+                multiline: False
+            
+            Button:
+                text: "Save"
+                on_press:root.saveImg()
+
+    TabbedPanelItem:
+        text: "S. pie chart"
+        # size_hint_max_x: .8
+        # pos_hint: {'top': 1}
+        id:more
+        BoxLayout:
+            size_hint_y:.2
+
+            TextInput:
+                id:nameImg
+                multiline: False
+            
+            Button:
+                text: "Save"
+                on_press:root.saveImg()
+            
+    TabbedPanelItem:
+        text: "G. pie chart"
+
+        # size_hint_max_x: .8
+        # pos_hint: {'top': 1}
+        id:pieG
+        BoxLayout:
+            size_hint_y:.2
+
+            TextInput:
+                id:nameImg
+                multiline: False
+            
+            Button:
+                text: "Save"
+                on_press:root.saveImg()
+            
+    TabbedPanelItem:
+        text: "Freq Graph"
+
+        # size_hint_max_x: .8
+        # pos_hint: {'top': 1}
+        id:FCum
+        BoxLayout:
+            size_hint_y:.2
+
+            TextInput:
+                id:nameImg
+                multiline: False
+            
+            Button:
+                text: "Save"
+                on_press:root.saveImg()
+            
